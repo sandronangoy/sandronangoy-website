@@ -4,7 +4,7 @@ const letters = defineCollection({
   type: 'content',
   schema: z.object({
     title: z.string(),
-    date: z.date(),
+    date: z.coerce.date(),
     dek: z.string().optional(),
     coverLabel: z.string().optional(),
     coverImage: z.string().optional(),
@@ -15,7 +15,7 @@ const letters = defineCollection({
 const thread = defineCollection({
   type: 'content',
   schema: z.object({
-    date: z.date(),
+    date: z.coerce.date(),
     draft: z.boolean().default(false),
   }),
 });
@@ -24,7 +24,7 @@ const models = defineCollection({
   type: 'content',
   schema: z.object({
     title: z.string(),
-    date: z.date(),
+    date: z.coerce.date(),
     dek: z.string().optional(),
     file: z.string().optional(),
     coverLabel: z.string().optional(),
