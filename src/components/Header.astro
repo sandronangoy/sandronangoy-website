@@ -1,0 +1,19 @@
+---
+const { path = '' } = Astro.props;
+const links = [
+  { href: '/letters/', label: 'letters' },
+  { href: '/thread/', label: 'thread' },
+  { href: '/models/', label: 'models' },
+  { href: '/about/', label: 'about' },
+];
+---
+<header class="site-head">
+  <div class="wrap-wide">
+    <a class="brand" href="/">Sandro Nangoy</a>
+    <nav class="nav">
+      {links.map((l) => (
+        <a href={l.href} class={path.startsWith(l.href) ? 'active' : ''}>{l.label}</a>
+      ))}
+    </nav>
+  </div>
+</header>

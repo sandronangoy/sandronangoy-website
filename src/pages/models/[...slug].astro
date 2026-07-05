@@ -1,0 +1,34 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Cover from '../../components/Cover.astro';
+import { fmtDate } from '../../utils';
+export async function getStaticPaths() {
+  const models = await getCollection('models', (e) => !e.data.draft);
+  return models.map((entry) => ({ params: { slug: entry.slug }, props: { entry } }));
+}
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+const file = entry.data.file;
+const fname = file ? file.split('/').pop() : '';
+---
+<Base title={entry.data.title} description={entry.data.dek}>
+  <article class="wrap article">
+    <div class="article-cover">
+      <Cover title={entry.data.title} tag={entry.data.coverLabel || 'model'} image={entry.data.coverImage} />
+    </div>
+    <div class="kicker">{fmtDate(entry.data.date)} · model</div>
+    <h1>{entry.data.title}</h1>
+    {entry.data.dek && <p class="dek">{entry.data.dek}</p>}
+    <div class="prose"><Content /></div>
+    {file && (
+      <a class="attach" href={file} download>
+        <span class="ic">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M8 11l4 4 4-4"/><path d="M4 21h16"/></svg>
+        </span>
+        <span>download {fname}</span>
+      </a>
+    )}
+    <div><a class="backlink" href="/models/">← all models</a></div>
+  </article>
+</Base>

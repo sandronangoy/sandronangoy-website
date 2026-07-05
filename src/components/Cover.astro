@@ -1,0 +1,34 @@
+---
+const { title = '', tag = '', image = '', href = '' } = Astro.props;
+
+function linePoints(seed) {
+  let h = 0;
+  for (let i = 0; i < seed.length; i++) h = (h * 31 + seed.charCodeAt(i)) & 0xffff;
+  const rnd = () => { h = (h * 1103515245 + 12345) & 0x7fffffff; return (h % 1000) / 1000; };
+  const n = 8, w = 300, top = 8, bot = 80;
+  const pts = [];
+  for (let i = 0; i < n; i++) {
+    const x = Math.round((i / (n - 1)) * w);
+    const drift = (bot - top) * (i / (n - 1));
+    const y = Math.max(top, Math.min(bot, bot - drift * (0.6 + rnd() * 0.7)));
+    pts.push(`${x},${Math.round(y)}`);
+  }
+  return pts.join(' ');
+}
+const pts = linePoints(title || tag || 'sn');
+const Tag = href ? 'a' : 'div';
+---
+{image ? (
+  <Tag class="cover has-img" href={href || undefined}>
+    <img src={image} alt={title} />
+  </Tag>
+) : (
+  <Tag class="cover" href={href || undefined}>
+    {tag && <div class="tag">{tag}</div>}
+    <svg viewBox="0 0 300 90" preserveAspectRatio="none" aria-hidden="true">
+      <polyline points={pts} fill="none" stroke="var(--cover-line)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" />
+      <polyline points="0,84 60,82 120,77 180,73 240,68 300,62" fill="none" stroke="#6E675A" stroke-width="1.5" stroke-dasharray="3 4" />
+    </svg>
+    <div class="cov-title">{title}</div>
+  </Tag>
+)}

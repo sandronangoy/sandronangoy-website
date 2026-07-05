@@ -1,0 +1,69 @@
+# ============================================================
+#  Sandro Nangoy — content manager (Sveltia CMS)
+#  EDIT the two CAPITALISED bits below after you create your
+#  GitHub repo, then never touch this file again.
+# ============================================================
+
+backend:
+  name: github
+  repo: YOUR_GITHUB_USERNAME/sandronangoy-website   # <-- change to your repo
+  branch: main
+  base_url: https://YOUR-AUTH-WORKER.workers.dev      # <-- your Sveltia auth worker (see DEPLOY.md, step 5)
+
+# where images/files you upload get stored
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+# nicer editing experience
+publish_mode: simple
+site_url: https://sandronangoy.com
+
+collections:
+  - name: letters
+    label: "Letters"
+    label_singular: "Letter"
+    folder: "src/content/letters"
+    create: true
+    slug: "{{year}}-{{month}}-{{slug}}"
+    summary: "{{title}}  ·  {{date}}"
+    sortable_fields: [date, title]
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: "Summary (one-line teaser)", name: "dek", widget: "text", required: false }
+      - { label: "Cover label", name: "coverLabel", widget: "string", required: false, hint: "small tag on the cover, e.g. the nangoy foundation · q2 2026" }
+      - { label: "Cover image (optional — leave blank for the auto chart cover)", name: "coverImage", widget: "image", required: false }
+      - { label: "Draft (hide from the site)", name: "draft", widget: "boolean", default: false }
+      - { label: "Body", name: "body", widget: "markdown" }
+
+  - name: thread
+    label: "Thread"
+    label_singular: "Post"
+    folder: "src/content/thread"
+    create: true
+    identifier_field: "date"
+    slug: "{{year}}-{{month}}-{{day}}-{{hour}}{{minute}}"
+    summary: "{{date}}"
+    sortable_fields: [date]
+    fields:
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Draft (hide from the site)", name: "draft", widget: "boolean", default: false }
+      - { label: "Post", name: "body", widget: "markdown", hint: "short — a tweet-length thought. No title needed." }
+
+  - name: models
+    label: "Models"
+    label_singular: "Model"
+    folder: "src/content/models"
+    create: true
+    slug: "{{year}}-{{month}}-{{slug}}"
+    summary: "{{title}}  ·  {{date}}"
+    sortable_fields: [date, title]
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: "Summary (one-line teaser)", name: "dek", widget: "text", required: false }
+      - { label: "Attachment (Excel / PDF / CSV)", name: "file", widget: "file", required: false }
+      - { label: "Cover label", name: "coverLabel", widget: "string", required: false }
+      - { label: "Cover image (optional)", name: "coverImage", widget: "image", required: false }
+      - { label: "Draft (hide from the site)", name: "draft", widget: "boolean", default: false }
+      - { label: "Body", name: "body", widget: "markdown" }

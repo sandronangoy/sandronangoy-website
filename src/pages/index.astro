@@ -1,0 +1,56 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Cover from '../components/Cover.astro';
+import { fmtDate, byDateDesc } from '../utils';
+
+const letters = (await getCollection('letters', (e) => !e.data.draft)).sort(byDateDesc);
+const featured = letters[0];
+---
+<Base>
+  <section class="wrap-wide hero">
+    <h1>the wonderful business of compounding.</h1>
+    <p class="sub">the nangoy foundation letters — a long-term value investor thinking out loud about companies, margin of safety, and the patience it takes to hold on.</p>
+  </section>
+
+  {featured && (
+    <section class="wrap-wide" style="padding-bottom: 8px;">
+      <p class="eyebrow">featured</p>
+      <div class="featured">
+        <Cover title={featured.data.title} tag={featured.data.coverLabel} image={featured.data.coverImage} href={`/letters/${featured.slug}/`} />
+        <div class="meta">
+          <div class="date">{fmtDate(featured.data.date)} · letter</div>
+          <h2><a href={`/letters/${featured.slug}/`}>{featured.data.title}</a></h2>
+          <p>{featured.data.dek}</p>
+          <a class="more" href={`/letters/${featured.slug}/`}>read the letter →</a>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="wrap-wide">
+    <p class="eyebrow" style="padding-top: 34px;">explore</p>
+    <div class="cards">
+      <a class="card" href="/letters/">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7.5l9 6 9-6"/></svg></div>
+        <h3>letters</h3>
+        <p>the long-form quarterlies — what I own and why.</p>
+      </a>
+      <a class="card" href="/thread/">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v10H8l-4 4z"/><circle cx="9" cy="10" r="1" fill="currentColor" stroke="none"/><circle cx="12" cy="10" r="1" fill="currentColor" stroke="none"/><circle cx="15" cy="10" r="1" fill="currentColor" stroke="none"/></svg></div>
+        <h3>thread</h3>
+        <p>quick takes as the market moves.</p>
+      </a>
+      <a class="card" href="/models/">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M3 14h18M9 4v16"/></svg></div>
+        <h3>models</h3>
+        <p>the spreadsheets behind the calls.</p>
+      </a>
+    </div>
+  </section>
+
+  <section class="wrap epigraph">
+    <blockquote>"the stock market is a device for transferring money from the impatient to the patient."</blockquote>
+    <cite>— warren buffett</cite>
+  </section>
+</Base>

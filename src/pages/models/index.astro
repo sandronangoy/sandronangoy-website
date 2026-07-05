@@ -1,0 +1,20 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { fmtDate, byDateDesc } from '../../utils';
+const models = (await getCollection('models', (e) => !e.data.draft)).sort(byDateDesc);
+---
+<Base title="Models" description="The spreadsheets behind the calls.">
+  <section class="wrap" style="padding-top: 46px;">
+    <p class="eyebrow">models</p>
+    <h1 style="font-weight:300;font-size:34px;margin:0 0 6px;">the spreadsheets behind the calls.</h1>
+    <p class="sub" style="color:var(--muted);margin:0 0 20px;">the math, laid bare. download and check it yourself.</p>
+    {models.map((m) => (
+      <a class="entry" href={`/models/${m.slug}/`}>
+        <div class="date">{fmtDate(m.data.date)} · model</div>
+        <h3>{m.data.title}</h3>
+        {m.data.dek && <p>{m.data.dek}</p>}
+      </a>
+    ))}
+  </section>
+</Base>

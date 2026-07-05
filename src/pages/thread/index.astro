@@ -1,0 +1,23 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { fmtDate, byDateDesc } from '../../utils';
+const raw = (await getCollection('thread', (e) => !e.data.draft)).sort(byDateDesc);
+const items = await Promise.all(raw.map(async (t) => ({ data: t.data, Content: (await t.render()).Content })));
+---
+<Base title="Thread" description="Quick takes as the market moves.">
+  <section class="wrap" style="padding-top: 46px;">
+    <p class="eyebrow">thread</p>
+    <h1 style="font-weight:300;font-size:34px;margin:0 0 6px;">quick takes as the market moves.</h1>
+    <p class="sub" style="color:var(--muted);margin:0 0 20px;">half-formed ideas and reactions — notes to myself, in public.</p>
+    {items.map((i) => {
+      const C = i.Content;
+      return (
+        <div class="tweet">
+          <div class="date">{fmtDate(i.data.date)}</div>
+          <div class="body"><C /></div>
+        </div>
+      );
+    })}
+  </section>
+</Base>
