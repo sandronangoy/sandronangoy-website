@@ -26,7 +26,7 @@ const Tag = href ? 'a' : 'div';
   <Tag class="cover" href={href || undefined}>
     {tag && <div class="tag">{tag}</div>}
     <svg viewBox="0 0 300 90" preserveAspectRatio="none" aria-hidden="true">
-      <polyline points={pts} fill="none" stroke="var(--cover-line)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" />
+      <polyline class="chart-line" points={pts} fill="none" stroke="var(--cover-line)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" />
       <polyline points="0,84 60,82 120,77 180,73 240,68 300,62" fill="none" stroke="#6E675A" stroke-width="1.5" stroke-dasharray="3 4" />
     </svg>
     <div class="cov-title">{title}</div>

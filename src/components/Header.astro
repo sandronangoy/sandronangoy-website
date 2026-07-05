@@ -9,11 +9,23 @@ const links = [
 ---
 <header class="site-head">
   <div class="wrap-wide">
-    <a class="brand" href="/">Sandro Nangoy</a>
+    <a class="brand" href="/">
+      <span class="mark" aria-hidden="true">
+        <svg viewBox="0 0 42 42">
+          <rect width="42" height="42" rx="10" fill="#2B2823" />
+          <text x="21" y="19" text-anchor="middle" font-family="Spectral, Georgia, serif" font-size="17" font-weight="500" fill="#F2ECDF">sn</text>
+          <polyline points="10,33 17,28 24,29.5 33,22" fill="none" stroke="#D6B584" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </span>
+      <span>Sandro Nangoy</span>
+    </a>
     <nav class="nav">
       {links.map((l) => (
         <a href={l.href} class={path.startsWith(l.href) ? 'active' : ''}>{l.label}</a>
       ))}
+      <a href="/search/" class={"nav-search" + (path.startsWith('/search') ? ' active' : '')} aria-label="Search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.2-3.2"/></svg>
+      </a>
     </nav>
   </div>
 </header>

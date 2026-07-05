@@ -223,3 +223,115 @@ img { max-width: 100%; height: auto; }
 
 .article-cover { margin-bottom: 26px; }
 .article-cover .cover { min-height: 300px; }
+
+/* ===================== refinements v2 ===================== */
+html, body { overflow-x: hidden; }
+
+/* --- more air --- */
+.hero { padding: 74px 0 54px; }
+.hero h1 { font-size: clamp(30px, 6vw, 44px); }
+.featured { gap: 34px; }
+.cards { gap: 20px; }
+.entry { padding: 24px 0; }
+.epigraph { padding: 74px 0; margin-top: 60px; }
+.section-label { padding: 38px 0 14px; }
+
+/* --- logo --- */
+.brand { display: inline-flex; align-items: center; gap: 12px; }
+.brand .mark { display: inline-flex; }
+.brand .mark svg { width: 34px; height: 34px; display: block; }
+
+/* --- animations (quiet) --- */
+@keyframes riseIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes drawLine { to { stroke-dashoffset: 0; } }
+main > *, .site-head > .wrap-wide, .site-foot > .wrap-wide {
+  animation: riseIn .7s cubic-bezier(.22,.61,.36,1) both;
+}
+main > *:nth-child(2) { animation-delay: .06s; }
+main > *:nth-child(3) { animation-delay: .12s; }
+main > *:nth-child(4) { animation-delay: .18s; }
+.cover .chart-line { stroke-dasharray: 480; stroke-dashoffset: 480; animation: drawLine 1.3s ease .3s forwards; }
+.card, .cover, .socials a, .attach { transition: transform .2s ease, border-color .2s ease, color .2s ease; }
+.entry h3, .nav a { transition: color .18s ease; }
+.card:hover { transform: translateY(-2px); }
+.cover:hover { transform: translateY(-2px); }
+a.entry:hover h3 { color: var(--clay); }
+@media (prefers-reduced-motion: reduce) {
+  main > *, .site-head > .wrap-wide, .site-foot > .wrap-wide,
+  .cover .chart-line, .card, .cover { animation: none !important; transition: none !important; }
+  .cover .chart-line { stroke-dashoffset: 0; }
+}
+
+/* --- thread: each post on its own card --- */
+.tweet {
+  background: #F7F3EA;
+  border: 0.5px solid var(--line);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+}
+.tweet:first-child { border-top: 0.5px solid var(--line); }
+.tweet .body { color: var(--ink-soft); }
+
+/* --- letters index: cover thumbnail beside the entry --- */
+.entry.has-cover {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 22px;
+  align-items: center;
+}
+.entry.has-cover .cover { min-height: 0; height: 96px; padding: 12px 14px; }
+.entry.has-cover .cover .cov-title { display: none; }
+.entry.has-cover .cover svg { height: 40px; margin: 6px 0 0; }
+.entry.has-cover .cover.has-img { height: 96px; }
+
+/* --- mobile fixes --- */
+@media (max-width: 680px) {
+  .hero { text-align: center; padding: 52px 0 38px; }
+  .hero h1, .hero .sub { margin-left: auto; margin-right: auto; }
+  .entry.has-cover { grid-template-columns: 92px 1fr; gap: 14px; }
+  .entry.has-cover .cover { height: 74px; padding: 10px; }
+  .entry.has-cover .cover svg { height: 30px; }
+}
+
+/* ===================== refinements v3 ===================== */
+/* slightly bigger letter thumbnails */
+.entry.has-cover { grid-template-columns: 178px 1fr; gap: 24px; }
+.entry.has-cover .cover { height: 112px; padding: 14px 16px; }
+.entry.has-cover .cover.has-img { height: 112px; }
+.entry.has-cover .cover svg { height: 48px; }
+
+/* about portrait */
+.about-portrait { float: right; width: 244px; margin: 4px 0 22px 30px; }
+.about-portrait img { width: 100%; border-radius: 12px; display: block; border: 0.5px solid var(--line); }
+.about-portrait figcaption { font-size: 13px; color: var(--faint); text-align: center; margin-top: 8px; }
+
+@media (max-width: 680px) {
+  .entry.has-cover { grid-template-columns: 110px 1fr; gap: 16px; }
+  .entry.has-cover .cover { height: 88px; padding: 10px; }
+  .entry.has-cover .cover svg { height: 34px; }
+  .about-portrait { float: none; width: 100%; max-width: 300px; margin: 0 auto 24px; }
+}
+
+/* ===================== refinements v4 ===================== */
+.nav-search { display: inline-flex; align-items: center; color: var(--faint); }
+.nav-search svg { width: 18px; height: 18px; display: block; }
+.nav-search:hover { color: var(--clay); }
+
+/* portrait auto-fits whatever photo is dropped in */
+.about-portrait img {
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: center 32%;
+}
+
+/* ===================== refinements v5 ===================== */
+/* images inside thread posts (charts, screenshots) */
+.tweet .body img {
+  max-width: 100%;
+  border-radius: 10px;
+  margin: 10px 0 2px;
+  display: block;
+  border: 0.5px solid var(--line);
+}
+.tweet .body p:last-child { margin-bottom: 0; }

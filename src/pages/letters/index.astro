@@ -1,19 +1,23 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import Cover from '../../components/Cover.astro';
 import { fmtDate, byDateDesc } from '../../utils';
 const letters = (await getCollection('letters', (e) => !e.data.draft)).sort(byDateDesc);
 ---
 <Base title="Letters" description="Long-form quarterly letters from the Nangoy Foundation.">
-  <section class="wrap" style="padding-top: 46px;">
+  <section class="wrap" style="padding-top: 52px;">
     <p class="eyebrow">letters</p>
     <h1 style="font-weight:300;font-size:34px;margin:0 0 6px;">the long-form quarterlies.</h1>
-    <p class="sub" style="color:var(--muted);margin:0 0 20px;">what I own, why I own it, and what I got wrong.</p>
+    <p class="sub" style="color:var(--muted);margin:0 0 26px;">what I own, why I own it, and what I got wrong.</p>
     {letters.map((l) => (
-      <a class="entry" href={`/letters/${l.slug}/`}>
-        <div class="date">{fmtDate(l.data.date)} · letter</div>
-        <h3>{l.data.title}</h3>
-        {l.data.dek && <p>{l.data.dek}</p>}
+      <a class="entry has-cover" href={`/letters/${l.slug}/`}>
+        <Cover title={l.data.title} tag={l.data.coverLabel} image={l.data.coverImage} />
+        <div class="entry-text">
+          <div class="date">{fmtDate(l.data.date)} · letter</div>
+          <h3>{l.data.title}</h3>
+          {l.data.dek && <p>{l.data.dek}</p>}
+        </div>
       </a>
     ))}
   </section>
