@@ -28,5 +28,53 @@ const full = title === 'Sandro Nangoy' ? title : `${title} — Sandro Nangoy`;
     <slot />
   </main>
   <Footer />
+  <div id="search-overlay" class="search-overlay" hidden>
+    <div class="search-panel" role="dialog" aria-modal="true" aria-label="Search">
+      <div class="search-bar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.2-3.2"/></svg>
+        <input id="so-q" type="search" placeholder="search letters, thread, models\u2026" autocomplete="off" />
+        <button id="so-close" type="button" aria-label="Close">esc</button>
+      </div>
+      <div id="so-count" class="so-count"></div>
+      <div id="so-results" class="so-results"></div>
+    </div>
+  </div>
+  <script is:inline>
+    (function () {
+      var overlay = document.getElementById('search-overlay');
+      var openBtn = document.getElementById('search-open');
+      var closeBtn = document.getElementById('so-close');
+      var input = document.getElementById('so-q');
+      var results = document.getElementById('so-results');
+      var count = document.getElementById('so-count');
+      if (!overlay) return;
+      var data = null, loaded = false, timer;
+      function load(cb){ if(loaded){cb&&cb();return;} loaded=true; fetch('/search-index.json').then(function(r){return r.json();}).then(function(d){data=d;cb&&cb();}).catch(function(){data=[];cb&&cb();}); }
+      function esc(s){ return s.replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+      function fmt(d){ var p=d.split('-'); var m=['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'][parseInt(p[1],10)-1]; return p[2]+' '+m+' '+p[0]; }
+      function search(q){ var t=(q||'').trim().toLowerCase(); if(!t||!data) return []; return data.filter(function(it){ return (it.title+' '+it.dek+' '+it.text+' '+it.type).toLowerCase().indexOf(t)>-1; }); }
+      function render(list,q){
+        if(!q){ results.innerHTML=''; count.textContent=''; return; }
+        if(!list.length){ results.innerHTML='<p style="color:var(--muted);padding:16px 0;">nothing yet for \u201c'+esc(q)+'\u201d.</p>'; count.textContent=''; return; }
+        count.textContent=list.length+(list.length===1?' result':' results');
+        results.innerHTML=list.map(function(it){
+          var head=it.title?esc(it.title):esc(it.text.slice(0,80))+(it.text.length>80?'\u2026':'');
+          var sub=it.title?esc(it.dek||it.text.slice(0,120)+'\u2026'):'';
+          return '<a class="entry" href="'+it.url+'"><div class="date">'+fmt(it.date)+' \u00b7 '+it.type+'</div><h3>'+head+'</h3>'+(sub?'<p>'+sub+'</p>':'')+'</a>';
+        }).join('');
+      }
+      function open(){ overlay.hidden=false; document.body.style.overflow='hidden'; load(function(){ if(input.value) render(search(input.value),input.value.trim()); }); setTimeout(function(){input.focus();},10); }
+      function close(){ overlay.hidden=true; document.body.style.overflow=''; }
+      if(openBtn) openBtn.addEventListener('click', function(e){ e.preventDefault(); open(); });
+      closeBtn.addEventListener('click', close);
+      overlay.addEventListener('click', function(e){ if(e.target===overlay) close(); });
+      input.addEventListener('input', function(){ clearTimeout(timer); timer=setTimeout(function(){ render(search(input.value),input.value.trim()); },110); });
+      document.addEventListener('keydown', function(e){
+        var tag=(document.activeElement&&document.activeElement.tagName||'').toLowerCase();
+        if(((e.key==='k'||e.key==='K')&&(e.metaKey||e.ctrlKey)) || (e.key==='/'&&tag!=='input'&&tag!=='textarea'&&overlay.hidden)){ e.preventDefault(); open(); }
+        else if(e.key==='Escape'&&!overlay.hidden){ close(); }
+      });
+    })();
+  </script>
 </body>
 </html>
