@@ -13,20 +13,18 @@ const featured = letters[0];
     <p class="sub">the nangoy foundation letters — written and managed by Sandro Nangoy, a long-term value investor thinking out loud about companies, margin of safety, and the patience it takes to hold on.</p>
   </section>
 
-  {featured && (
-    <section class="wrap-wide" style="padding-bottom: 8px;">
-      <p class="eyebrow">featured</p>
-      <div class="featured">
-        <Cover title={featured.data.title} tag={featured.data.coverLabel} image={featured.data.coverImage} href={`/letters/${featured.slug}/`} />
-        <div class="meta">
-          <div class="date">{fmtDate(featured.data.date)} · letter</div>
-          <h2><a href={`/letters/${featured.slug}/`}>{featured.data.title}</a></h2>
-          <p>{featured.data.dek}</p>
-          <a class="more" href={`/letters/${featured.slug}/`}>read the letter →</a>
-        </div>
+  <section class="wrap-wide" style="padding-bottom: 8px;">
+    <p class="eyebrow">featured</p>
+    <div class="featured">
+      <Cover title="Monthly Letter — August 2026" tag="the nangoy foundation · august 2026" href="/letters/august-2026.html" />
+      <div class="meta">
+        <div class="date">August 2026 · letter</div>
+        <h2><a href="/letters/august-2026.html">Monthly Letter — August 2026</a></h2>
+        <p>The month the market swung from pricing a cut to a hike, a monster NVIDIA quarter and why the price still worries me, and the book a line each.</p>
+        <a class="more" href="/letters/august-2026.html">read the letter →</a>
       </div>
-    </section>
-  )}
+    </div>
+  </section>
 
   <section class="wrap-wide">
     <p class="eyebrow" style="padding-top: 34px;">explore</p>
