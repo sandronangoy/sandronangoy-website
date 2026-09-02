@@ -187,6 +187,12 @@
   .toc a.active{ color:var(--accent); border-left-color:var(--accent); font-weight:600; }
   @media (max-width:1199px){ .toc{ display:none; } }
   @media print{ .toc{ display:none; } }
+
+  /* ---- Back to site ---- */
+  .backhome{ display:inline-block; font-family:ui-sans-serif,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+    font-size:13px; letter-spacing:.02em; color:var(--accent); text-decoration:none; }
+  .backhome:hover{ text-decoration:underline; }
+  @media print{ .backhome{ display:none; } }
 </style>
 
 <div class="wrap">
@@ -202,6 +208,8 @@
     <a href="#moves">portfolio moves</a>
     <a href="#facts">fund facts</a>
   </nav>
+
+  <a class="backhome" href="/">&larr; sandronangoy.com</a>
 
   <!-- ============ MASTHEAD ============ -->
   <header class="masthead">
@@ -387,6 +395,8 @@
   <footer>
     <p class="disclaimer">This letter is a personal record kept for my own reflection. It is not investment advice, not an offer of anything, and not a solicitation. I hold the positions discussed. Returns are time-weighted and gross of any costs. Past performance says nothing about the future.</p>
   </footer>
+
+  <p style="text-align:center;margin:18px 0 0;"><a class="backhome" href="/">&larr; back to sandronangoy.com</a></p>
 
 </div>
 
