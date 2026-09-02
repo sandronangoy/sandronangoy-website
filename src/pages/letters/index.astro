@@ -10,6 +10,14 @@ const letters = (await getCollection('letters', (e) => !e.data.draft)).sort(byDa
     <p class="eyebrow">letters</p>
     <h1 style="font-weight:300;font-size:34px;margin:0 0 6px;">the long-form quarterlies.</h1>
     <p class="sub" style="color:var(--muted);margin:0 0 26px;">what I own, why I own it, and what I got wrong.</p>
+    <a class="entry has-cover" href="/letters/august-2026.html">
+      <Cover title="Monthly Letter — August 2026" tag="the nangoy foundation · august 2026" />
+      <div class="entry-text">
+        <div class="date">August 2026 · letter</div>
+        <h3>Monthly Letter — August 2026</h3>
+        <p>The month the market swung from pricing a cut to a hike, a monster NVIDIA quarter and why the price still worries me, and the book a line each.</p>
+      </div>
+    </a>
     {letters.map((l) => (
       <a class="entry has-cover" href={`/letters/${l.slug}/`}>
         <Cover title={l.data.title} tag={l.data.coverLabel} image={l.data.coverImage} />
